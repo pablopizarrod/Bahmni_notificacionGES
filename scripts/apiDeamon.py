@@ -35,6 +35,11 @@ while True:
     openmrscursor.execute("select obs_id from obs od where od.obs_type_id=2"
                           "and od.obs_id not in (select odp.obs_id  from obs odp"
                           "where odp.status='E')")
+    #///modificar query para obtener conceptId de CIEL o de CIE-10
+    #///revisar en query el estado de la tabla odp
+    #///modificar query para agregar la busqueda en condition (condition.code), asegurar no repetir si son del paciente.
+    #///revisar si existe el ges en condition
+    
     
     # Obtener todos los resultados de la consulta
     openmrsResult = openmrscursor.fetchall()
@@ -45,12 +50,16 @@ while True:
     # Iterar sobre cada resultado obtenido
     for resul in openmrsResult:
         try:
+            #///Con apiconcept-to-ges.py DEF concept_details() obtener GES
+            #///Si GES hacer lo siguiente:
             # Construir una sentencia SQL para insertar un nuevo registro en la tabla orderPrescriptions
             # con el order_id, un prescriptor_id de 'apiDaemon', un estado 'E' y la fecha actual
             stmtq ="insert into obs (obs_id,creator,status,date_created)values("+str(resul[0])+",'apiDaemon','E',CURDATE())"
             
             # Ejecutar la sentencia SQL
             openmrscursor.execute(stmtq)
+
+            #///Ingresar caso ges en condition con API openmrs
             
             # Confirmar los cambios en la base de datos
             openmrsdb.commit()
