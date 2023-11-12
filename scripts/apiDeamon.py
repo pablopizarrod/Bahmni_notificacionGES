@@ -19,6 +19,8 @@ import cielConceptToGesApi
 load_dotenv()
 
 
+
+
 # Conexión a la base de datos MySQL
 openmrsdb_name = os.getenv('openmrsbd_var')
 notificacionesdb_name = os.getenv("notificacionesbd_var")
@@ -54,21 +56,21 @@ while True:
        pat_e.value as email_paciente,
        crt.code as icd10,
        o.creator as usuario_registro
-        from openmrs.obs o
-        inner join openmrs.concept_reference_map crm on o.value_coded = crm.concept_id
-        inner join openmrs.concept_reference_term crt on crt.concept_reference_term_id = crm.concept_reference_term_id
-        inner join openmrs.users pr_u on o.creator = pr_u.user_id
-        inner join openmrs.person pr_p on pr_u.person_id = pr_p.person_id
-        inner join openmrs.person_name pr_pn on pr_u.person_id = pr_pn.person_id
-        inner join openmrs.person_name pn on o.person_id = pn.person_id
-        inner join openmrs.patient_identifier pi on o.person_id = pi.patient_id
-        inner join openmrs.person_address pa on o.person_id = pa.person_id
-        inner join openmrs.person_attribute pat_n on o.person_id = pat_n.person_id and pat_n.person_attribute_type_id = 14
-        inner join openmrs.person_attribute pat_e on o.person_id = pat_e.person_id and pat_e.person_attribute_type_id = 13
+        from """+openmrsdb_name+""".obs o
+        inner join """+openmrsdb_name+""".concept_reference_map crm on o.value_coded = crm.concept_id
+        inner join """+openmrsdb_name+""".concept_reference_term crt on crt.concept_reference_term_id = crm.concept_reference_term_id
+        inner join """+openmrsdb_name+""".users pr_u on o.creator = pr_u.user_id
+        inner join """+openmrsdb_name+""".person pr_p on pr_u.person_id = pr_p.person_id
+        inner join """+openmrsdb_name+""".person_name pr_pn on pr_u.person_id = pr_pn.person_id
+        inner join """+openmrsdb_name+""".person_name pn on o.person_id = pn.person_id
+        inner join """+openmrsdb_name+""".patient_identifier pi on o.person_id = pi.patient_id
+        inner join """+openmrsdb_name+""".person_address pa on o.person_id = pa.person_id
+        inner join """+openmrsdb_name+""".person_attribute pat_n on o.person_id = pat_n.person_id and pat_n.person_attribute_type_id = 14
+        inner join """+openmrsdb_name+""".person_attribute pat_e on o.person_id = pat_e.person_id and pat_e.person_attribute_type_id = 13
         where o.concept_id=22
         and crt.concept_source_id = 13
         and o.obs_id > """+str(obs_id_inicio)+"""
-        and o.obs_id not in (select IFNULL(n.obs_id,0) from notificaciones.notificacion_ges n)
+        and o.obs_id not in (select IFNULL(n.obs_id,0) from """+notificacionesdb_name+""".notificacion_ges n)
 UNION
 
 select null as obs_id,
@@ -83,19 +85,19 @@ select null as obs_id,
        pat_e.value as email_paciente,
        crt.code as icd10,
        c.creator as usuario_registro
-from openmrs.conditions c
-inner join openmrs.concept_reference_map crm on c.condition_coded = crm.concept_id
-inner join openmrs.concept_reference_term crt on crt.concept_reference_term_id = crm.concept_reference_term_id
-inner join openmrs.users pr_u on c.creator = pr_u.user_id
-inner join openmrs.person_name pr_pn on pr_u.person_id = pr_pn.person_id
-inner join openmrs.person_name pn on c.patient_id = pn.person_id
-inner join openmrs.patient_identifier pi on c.patient_id = pi.patient_id
-inner join openmrs.person_address pa on c.patient_id = pa.person_id
-inner join openmrs.person_attribute pat_n on c.patient_id = pat_n.person_id and pat_n.person_attribute_type_id = 14
-inner join openmrs.person_attribute pat_e on c.patient_id = pat_e.person_id and pat_e.person_attribute_type_id = 13
+from """+openmrsdb_name+""".conditions c
+inner join """+openmrsdb_name+""".concept_reference_map crm on c.condition_coded = crm.concept_id
+inner join """+openmrsdb_name+""".concept_reference_term crt on crt.concept_reference_term_id = crm.concept_reference_term_id
+inner join """+openmrsdb_name+""".users pr_u on c.creator = pr_u.user_id
+inner join """+openmrsdb_name+""".person_name pr_pn on pr_u.person_id = pr_pn.person_id
+inner join """+openmrsdb_name+""".person_name pn on c.patient_id = pn.person_id
+inner join """+openmrsdb_name+""".patient_identifier pi on c.patient_id = pi.patient_id
+inner join """+openmrsdb_name+""".person_address pa on c.patient_id = pa.person_id
+inner join """+openmrsdb_name+""".person_attribute pat_n on c.patient_id = pat_n.person_id and pat_n.person_attribute_type_id = 14
+inner join """+openmrsdb_name+""".person_attribute pat_e on c.patient_id = pat_e.person_id and pat_e.person_attribute_type_id = 13
 where crt.concept_source_id = 13
 and c.condition_id > """+str(condition_id_inicio)+"""
-and c.condition_id not in (select IFNULL(n.condition_id,0) from notificaciones.notificacion_ges n);"""
+and c.condition_id not in (select IFNULL(n.condition_id,0) from """+notificacionesdb_name+""".notificacion_ges n);"""
     print(query)
     openmrscursor.execute(query)
    

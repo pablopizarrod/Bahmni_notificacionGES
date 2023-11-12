@@ -2,6 +2,8 @@ create table notificacion_ges
 (
     id                          int auto_increment
         primary key,
+    obs_id                      int           null,
+    condition_id                int           null,
     nombre_establecimiento      varchar(500)  null,
     direccion_establecimiento   varchar(1000) null,
     ciudad_establecimiento      varchar(500)  null,
@@ -37,4 +39,3 @@ create table notificacion_ges
     constraint notificacion_ges_rut_paciente_pk
         unique (rut_paciente)
 );
-
