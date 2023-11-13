@@ -2,9 +2,12 @@ create table notificacion_ges
 (
     id                          int auto_increment
         primary key,
+    obs_id                      int           null,
+    condition_id                int           null,
     nombre_establecimiento      varchar(500)  null,
     direccion_establecimiento   varchar(1000) null,
     ciudad_establecimiento      varchar(500)  null,
+    notificador_id              int           null,
     nombre_notificador          varchar(500)  null,
     rut_notificador             varchar(12)   null,
     nombre_paciente             varchar(500)  null,
@@ -16,11 +19,12 @@ create table notificacion_ges
     telefono_fijo_paciente      varchar(50)   null,
     celular_paciente            varchar(50)   null,
     email_paciente              varchar(500)  not null,
+    cie10                       varchar(10)   null,
     diagnostico_ges             varchar(500)  null,
     tipo                        varchar(50)   null,
     fechahora_notificacion      datetime      null,
     firma_notificador           varchar(1000) null,
-    firma_paciente              varchar(1000) not null,
+    firma_paciente              varchar(1000) null,
     tipo_notificado             varchar(50)   null,
     nombre_representante        varchar(500)  null,
     rut_representante           varchar(12)   null,
@@ -30,11 +34,10 @@ create table notificacion_ges
     fechahora_registro          timestamp     null,
     fechahora_actualizacion     timestamp     null,
     usuario_registro            varchar(12)   not null,
-    usuario_actualizacion       varchar(12)   not null,
+    usuario_actualizacion       varchar(12)   null,
     estado                      char          null,
     constraint notificacion_ges_rut_notificador_pk
         unique (rut_notificador),
     constraint notificacion_ges_rut_paciente_pk
         unique (rut_paciente)
 );
-
