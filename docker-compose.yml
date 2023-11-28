@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8
+    container_name: mysql-container
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: notificacion_ges
+      MYSQL_USER: your_username
+      MYSQL_PASSWORD: your_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./script.sql:/docker-entrypoint-initdb.d/script.sql
+
+  cielConceptToGesApi:
+    build:
+      context: ./cielConceptToGesApi
+      dockerfile: Dockerfile
+    ports:
+      - "9091:9091"
+    command: ["python", "cielConceptToGesApi.py"]
+
+  apiDaemon:
+    build:
+      context: ./apiDaemon
+      dockerfile: Dockerfile
+    depends_on:
+      - mysql
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_DATABASE: mydatabase
+      MYSQL_USER: your_username
+      MYSQL_PASSWORD: your_password
+      FLASK_PASSWORD: flask_password  # Cambia esto por la contraseña que desees para acceder a la tabla
+    command: ["python", "cielConceptToGesApi.py"]
