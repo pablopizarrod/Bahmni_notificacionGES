@@ -5,7 +5,7 @@ FROM python:3
 WORKDIR /app
 
 # Copia todos los archivos en la carpeta script/ al directorio de trabajo en el contenedor
-COPY script/ /app/
+COPY cielConceptToGesApi/ /app/
 
 # Instala las dependencias
 RUN pip install -r requirements.txt
