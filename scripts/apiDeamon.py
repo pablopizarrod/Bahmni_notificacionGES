@@ -129,8 +129,8 @@ and c.condition_id not in (select IFNULL(n.condition_id,0) from """+notificacion
                 ges_name = cielConceptToGesApi.get_ges_concept_details(ges[0])
                 
                 openmrscursor2 = openmrsdb.cursor()
-                agregar_posible_ges_query = ("INSERT INTO "+notificacionesdb_name+".notificacion_ges (obs_id, condition_id, nombre_establecimiento, direccion_establecimiento, ciudad_establecimiento, notificador_id, nombre_notificador, rut_notificador, nombre_paciente, rut_paciente, aseguradora_paciente, direccion_paciente, comuna_paciente, region_paciente, telefono_fijo_paciente, celular_paciente, email_paciente, cie10, diagnostico_ges, tipo, fechahora_notificacion, firma_notificador, firma_paciente, tipo_notificado, nombre_representante, rut_representante, telefono_fijo_representante, celular_representante, email_representante, fechahora_registro, fechahora_actualizacion, usuario_registro, usuario_actualizacion, estado)"
-                         " VALUES (%s, %s, 'CMDF', 'Amanda Labarca', 'Santiago', %s, %s, null, %s, %s, null, %s, %s, null, null, %s, %s, %s, %s, null, null, null, null, null, null, null, null, null, null, current_timestamp, null, %s, null, 'Pendiente')")
+                agregar_posible_ges_query = ("INSERT INTO "+notificacionesdb_name+".notificacion_ges (obs_id, condition_id, nombre_establecimiento, direccion_establecimiento, ciudad_establecimiento, notificador_id, nombre_notificador, rut_notificador, nombre_paciente, rut_paciente, aseguradora_paciente, direccion_paciente, comuna_paciente, region_paciente, telefono_fijo_paciente, celular_paciente, email_paciente, cie10, diagnostico_ges, tipo, fechahora_notificacion, firma_notificador, firma_paciente, tipo_notificado, nombre_representante, rut_representante, telefono_representante, celular_representante, email_representante, fechahora_registro, fechahora_actualizacion, usuario_registro, usuario_actualizacion, estado)"
+                         " VALUES (%s, %s, 'Centro Médico y Dental Fundación', 'Amanda Labarca 70', 'Santiago', %s, %s, null, %s, %s, null, %s, %s, null, null, %s, %s, %s, %s, null, null, null, null, null, null, null, null, null, null, current_timestamp, null, %s, null, 'P')")
                 
                 # Ejecutar la sentencia SQL
                 openmrscursor2.execute(agregar_posible_ges_query,(obs_id,condition_id,id_notificador,nombre_notificador,nombre_paciente,rut_paciente,direccion_paciente,comuna_paciente,celular_paciente,email_paciente,icd10,ges_name,usuario_registro))
@@ -151,5 +151,5 @@ and c.condition_id not in (select IFNULL(n.condition_id,0) from """+notificacion
             print(f"Unexpected {err=}, {type(err)=}")
     
     
-    # Pausar la ejecución durante 5 segundos
-    time.sleep(20)
+    # Pausar la ejecución durante x segundos
+    time.sleep(int(os.getenv('intervalo_seg')))
