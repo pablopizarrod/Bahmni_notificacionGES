@@ -13,8 +13,6 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile-daemon
-    depends_on:
-      - mysql
     environment:
       MYSQL_HOST: localhost 
       MYSQL_PORT: 3306     
