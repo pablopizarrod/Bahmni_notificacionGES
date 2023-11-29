@@ -31,7 +31,6 @@ openmrsdb = mysql.connector.connect(
     user=os.getenv("user_var"),  # Obtener el nombre de usuario desde una variable de entorno
     password=os.getenv("password_var"),  # Obtener la contraseña desde una variable de entorno
     database=openmrsdb_name   # Obtener el nombre de la base de datos de openmrs desde una variable de entorno
-    
 )
 
 obs_id_inicio = 0
