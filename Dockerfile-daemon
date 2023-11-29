@@ -5,8 +5,8 @@ FROM python:3
 WORKDIR /app
 
 # Copia todos los archivos en la carpeta script/ al directorio de trabajo en el contenedor
-COPY apiDaemon/ /app/
-COPY cielConceptToGesApi/ /app/
+COPY apiDaemon/* /app/
+COPY cielConceptToGesApi/* /app/
 
 # Instala las dependencias
 RUN pip install mysql-connector-python python-dotenv
