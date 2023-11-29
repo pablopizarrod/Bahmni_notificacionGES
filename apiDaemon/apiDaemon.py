@@ -27,13 +27,11 @@ notificacionesdb_name = os.getenv("notificacionesbd_var")
 
 # Establecer la conexión con la base de datos MySQL utilizando los valores de las variables de entorno
 openmrsdb = mysql.connector.connect(
-    host=os.getenv("openmrshost_var"),  # Obtener la dirección IP del host desde una variable de entorno
+    host=os.getenv("gesdbhost_var"),  # Obtener la dirección IP del host desde una variable de entorno
     port=os.getenv("port_var"),  # Obtener el puerto desde una variable de entorno
     user=os.getenv("user_var"),  # Obtener el nombre de usuario desde una variable de entorno
     password=os.getenv("password_var"),  # Obtener la contraseña desde una variable de entorno
-    database=openmrsdb_name   # Obtener el nombre de la base de datos de openmrs desde una variable de entorno
-)
-    
+    database=os.getenv("notificacionesbd_var")  # Obtener el nombre de la base de datos de openmrs desde una variable de entorno
 )
 
 obs_id_inicio = 0
