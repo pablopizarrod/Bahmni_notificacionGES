@@ -1,20 +1,6 @@
 version: '3.8'
 
 services:
-  mysql:
-    image: mysql:8
-    container_name: mysql-ges
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: Lopior.123,
-      MYSQL_DATABASE: notificacion_ges
-      MYSQL_USER: user
-      MYSQL_PASSWORD: Lopior.123,
-    ports:
-      - "3308:3306"
-    volumes:
-      - ./script.sql:/docker-entrypoint-initdb.d/script.sql
-
   cielconcepttogesapi:
     build:
       context: ./
@@ -31,9 +17,9 @@ services:
       - mysql
     environment:
       MYSQL_HOST: localhost 
-      MYSQL_PORT: 3308      
+      MYSQL_PORT: 3306     
       MYSQL_DATABASE: notificacion_ges 
-      MYSQL_USER: user
+      MYSQL_USER: root
       MYSQL_PASSWORD: Lopior.123
       FLASK_PASSWORD: Lopior.123,  # Cambia esto por la contraseña que desees para acceder a la tabla
       restart: "always"
