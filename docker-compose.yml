@@ -30,8 +30,8 @@ services:
     depends_on:
       - mysql
     environment:
-      MYSQL_HOST: localhost  
-      MYSQL_PORT: 3308      
+      MYSQL_HOST: mysql 
+      MYSQL_PORT: 3306      
       MYSQL_DATABASE: notificacion_ges 
       MYSQL_USER: your_username
       MYSQL_PASSWORD: your_password
