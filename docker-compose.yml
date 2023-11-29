@@ -6,10 +6,10 @@ services:
     container_name: mysql-ges
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_ROOT_PASSWORD: Lopior.123,
       MYSQL_DATABASE: notificacion_ges
-      MYSQL_USER: your_username
-      MYSQL_PASSWORD: your_password
+      MYSQL_USER: user
+      MYSQL_PASSWORD: Lopior.123,
     ports:
       - "3308:3306"
     volumes:
@@ -30,10 +30,10 @@ services:
     depends_on:
       - mysql
     environment:
-      MYSQL_HOST: mysql 
-      MYSQL_PORT: 3306      
+      MYSQL_HOST: localhost 
+      MYSQL_PORT: 3308      
       MYSQL_DATABASE: notificacion_ges 
-      MYSQL_USER: your_username
-      MYSQL_PASSWORD: your_password
-      FLASK_PASSWORD: flask_password  # Cambia esto por la contraseña que desees para acceder a la tabla
+      MYSQL_USER: user
+      MYSQL_PASSWORD: Lopior.123
+      FLASK_PASSWORD: Lopior.123,  # Cambia esto por la contraseña que desees para acceder a la tabla
       restart: "always"
