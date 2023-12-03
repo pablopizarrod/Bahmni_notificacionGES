@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  cielconcepttogesapi:
+    build:
+      context: ./
+      dockerfile: Dockerfile-cieltoges
+    ports:
+      - "9091:9091"
+    restart: "always"
+
+  apidaemon:
+    build:
+      context: ./
+      dockerfile: Dockerfile-daemon
+    environment:
+      MYSQL_HOST: localhost 
+      MYSQL_PORT: 3306     
+      MYSQL_DATABASE: notificacion_ges 
+      MYSQL_USER: root
+      MYSQL_PASSWORD: Lopior.123
+      FLASK_PASSWORD: Lopior.123,  # Cambia esto por la contraseña que desees para acceder a la tabla
+      restart: "always"
