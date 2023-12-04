@@ -16,13 +16,13 @@ services:
       context: ./apiDaemon/
       dockerfile: Dockerfile-daemon
     environment:
-      MYSQL_HOST: localhost 
       MYSQL_PORT: 3306     
       MYSQL_DATABASE: notificacion_ges 
-      MYSQL_USER: root
-      MYSQL_PASSWORD: password
-      FLASK_PASSWORD: password  # Cambia esto por la contraseña que desees para acceder a la tabla
-      restart: "always"
+      MYSQL_USER: notificacion
+      MYSQL_PASSWORD: Lopior.123
+      FLASK_PASSWORD: Lopior.123 # Cambia esto por la contraseña que desees para acceder a la tabla
+      MYSQL_HOST: localhost 
+    restart: "always"
     networks:
       bahmni-standard_default:
 
