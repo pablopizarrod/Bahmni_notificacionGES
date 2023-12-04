@@ -13,7 +13,7 @@ services:
 
   apidaemon:
     build:
-      context: ./apiDaemon/
+      context: ./
       dockerfile: Dockerfile-daemon
     environment:
       MYSQL_PORT: 3306     
