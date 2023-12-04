@@ -13,7 +13,7 @@ services:
 
   apidaemon:
     build:
-      context: ./
+      context: ./apiDaemon/
       dockerfile: Dockerfile-daemon
     environment:
       MYSQL_HOST: localhost 
