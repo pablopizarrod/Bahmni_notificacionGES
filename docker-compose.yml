@@ -8,6 +8,8 @@ services:
     ports:
       - "9091:9091"
     restart: "always"
+    networks:
+      bahmni-standard_default:
 
   apidaemon:
     build:
@@ -21,5 +23,8 @@ services:
       MYSQL_PASSWORD: password
       FLASK_PASSWORD: password  # Cambia esto por la contraseña que desees para acceder a la tabla
       restart: "always"
+    networks:
+      bahmni-standard_default:
+
 networks:
   bahmni-standard_default:
