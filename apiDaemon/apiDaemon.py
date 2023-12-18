@@ -64,8 +64,8 @@ while True:
         inner join """+openmrsdb_name+""".person_name pn on o.person_id = pn.person_id
         inner join """+openmrsdb_name+""".patient_identifier pi on o.person_id = pi.patient_id
         inner join """+openmrsdb_name+""".person_address pa on o.person_id = pa.person_id
-        inner join """+openmrsdb_name+""".person_attribute pat_n on o.person_id = pat_n.person_id and pat_n.person_attribute_type_id = 14
-        inner join """+openmrsdb_name+""".person_attribute pat_e on o.person_id = pat_e.person_id and pat_e.person_attribute_type_id = 13
+        left join """+openmrsdb_name+""".person_attribute pat_n on o.person_id = pat_n.person_id and pat_n.person_attribute_type_id = 14
+        left join """+openmrsdb_name+""".person_attribute pat_e on o.person_id = pat_e.person_id and pat_e.person_attribute_type_id = 13
         where o.concept_id=15
         and crt.concept_source_id = 3
         and o.obs_id > """+str(obs_id_inicio)+"""
