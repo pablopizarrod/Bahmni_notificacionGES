@@ -19,9 +19,9 @@ services:
       MYSQL_PORT: 3306     
       MYSQL_DATABASE: notificacion_ges 
       MYSQL_USER: notificacion
-      MYSQL_PASSWORD: Lopior.123
-      FLASK_PASSWORD: Lopior.123 # Cambia esto por la contraseña que desees para acceder a la tabla
-      MYSQL_HOST: localhost 
+      MYSQL_PASSWORD: Admin.123
+      FLASK_PASSWORD: Admin.123 # Cambia esto por la contraseña que desees para acceder a la tabla
+      MYSQL_HOST: openmrsdb 
     restart: "always"
     networks:
       bahmni-standard_default:
