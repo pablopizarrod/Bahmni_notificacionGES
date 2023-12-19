@@ -16,9 +16,9 @@ import sys
 sys.path.append("..")
 import cielConceptToGesApi
 
+import uuid # nuevo 
+
 load_dotenv()
-
-
 
 
 # Conexión a la base de datos MySQL
@@ -36,6 +36,66 @@ openmrsdb = mysql.connector.connect(
 obs_id_inicio = 0
 condition_id_inicio = 0
 
+# UUID del concepto que deseas buscar
+concept_uuid = '81c7149b-3f10-11e4-adec-0800271c1b75'
+
+# Crear un cursor para ejecutar la consulta
+openmrscursor = openmrsdb.cursor()
+
+try:
+    # Consulta para obtener directamente el concept_id basado en el UUID
+    openmrscursor.execute(f"SELECT concept_id FROM {openmrsdb_name}.concept WHERE uuid = '{concept_uuid}';")
+
+    # Obtener el resultado de la consulta
+    concept_id_result = openmrscursor.fetchone()
+
+    # Verificar si se encontró un concepto con el UUID proporcionado
+    if concept_id_result:
+        concept_id = concept_id_result[0]
+
+        # Imprimir el concept_id encontrado
+        print(f"Concept ID encontrado: {concept_id}")
+
+    else:
+        print(f"No se encontró un concepto con el UUID {concept_uuid}")
+
+except Exception as err:
+    print(f"Error al ejecutar la consulta para obtener el concept_id: {err}")
+
+finally:
+    # Cerrar el cursor 
+    openmrscursor.close()
+
+# UUID del concept_source que deseas buscar
+concept_source_uuid = '00c3cf9f-0835-58fc-ab11-f9b1b0daac0a'
+
+# Crear un cursor para ejecutar la consulta
+openmrscursor = openmrsdb.cursor()
+
+try:
+    # Consulta para obtener el concept_source_id basado en el UUID
+    openmrscursor.execute(
+        f"SELECT concept_source_id FROM {openmrsdb_name}.concept_reference_source WHERE uuid = '{concept_source_uuid}';")
+
+    # Obtener el resultado de la consulta
+    concept_source_id_result = openmrscursor.fetchone()
+
+    # Verificar si se encontró un concept_source con el UUID proporcionado
+    if concept_source_id_result:
+        concept_source_id = concept_source_id_result[0]
+
+        # Imprimir el concept_source_id encontrado
+        print(f"Concept Source ID encontrado: {concept_source_id}")
+
+    else:
+        print(f"No se encontró un Concept Source con el UUID {concept_source_uuid}")
+
+except Exception as err:
+    print(f"Error al ejecutar la consulta para obtener el Concept Source ID: {err}")
+
+finally:
+    # Cerrar el cursor 
+    openmrscursor.close()
 
 while True:
     # Crear un cursor para ejecutar consultas en la base de datos
@@ -66,8 +126,8 @@ while True:
         inner join """+openmrsdb_name+""".person_address pa on o.person_id = pa.person_id
         left join """+openmrsdb_name+""".person_attribute pat_n on o.person_id = pat_n.person_id and pat_n.person_attribute_type_id = 14
         left join """+openmrsdb_name+""".person_attribute pat_e on o.person_id = pat_e.person_id and pat_e.person_attribute_type_id = 13
-        where o.concept_id=15
-        and crt.concept_source_id = 3
+        where o.concept_id={concept_id}
+        and crt.concept_source_id = {concept_source_id}
         and o.obs_id > """+str(obs_id_inicio)+"""
         and o.obs_id not in (select IFNULL(n.obs_id,0) from """+notificacionesdb_name+""".notificacion_ges n)
 UNION
@@ -84,24 +144,22 @@ select null as obs_id,
        pat_e.value as email_paciente,
        crt.code as icd10,
        c.creator as usuario_registro
-from """+openmrsdb_name+""".conditions c
-inner join """+openmrsdb_name+""".concept_reference_map crm on c.condition_coded = crm.concept_id
-inner join """+openmrsdb_name+""".concept_reference_term crt on crt.concept_reference_term_id = crm.concept_reference_term_id
-inner join """+openmrsdb_name+""".users pr_u on c.creator = pr_u.user_id
-inner join """+openmrsdb_name+""".person_name pr_pn on pr_u.person_id = pr_pn.person_id
-inner join """+openmrsdb_name+""".person_name pn on c.patient_id = pn.person_id
-inner join """+openmrsdb_name+""".patient_identifier pi on c.patient_id = pi.patient_id
-inner join """+openmrsdb_name+""".person_address pa on c.patient_id = pa.person_id
-inner join """+openmrsdb_name+""".person_attribute pat_n on c.patient_id = pat_n.person_id and pat_n.person_attribute_type_id = 14
-inner join """+openmrsdb_name+""".person_attribute pat_e on c.patient_id = pat_e.person_id and pat_e.person_attribute_type_id = 13
-where crt.concept_source_id = 13
-and c.condition_id > """+str(condition_id_inicio)+"""
-and c.condition_id not in (select IFNULL(n.condition_id,0) from """+notificacionesdb_name+""".notificacion_ges n);"""
+       from """+openmrsdb_name+""".conditions c
+       inner join """+openmrsdb_name+""".concept_reference_map crm on c.condition_coded = crm.concept_id
+       inner join """+openmrsdb_name+""".concept_reference_term crt on crt.concept_reference_term_id = crm.concept_reference_term_id
+       inner join """+openmrsdb_name+""".users pr_u on c.creator = pr_u.user_id
+       inner join """+openmrsdb_name+""".person_name pr_pn on pr_u.person_id = pr_pn.person_id
+       inner join """+openmrsdb_name+""".person_name pn on c.patient_id = pn.person_id
+       inner join """+openmrsdb_name+""".patient_identifier pi on c.patient_id = pi.patient_id
+       inner join """+openmrsdb_name+""".person_address pa on c.patient_id = pa.person_id
+       inner join """+openmrsdb_name+""".person_attribute pat_n on c.patient_id = pat_n.person_id and pat_n.person_attribute_type_id = 14
+       inner join """+openmrsdb_name+""".person_attribute pat_e on c.patient_id = pat_e.person_id and pat_e.person_attribute_type_id = 13
+       where crt.concept_source_id = {concept_source_id}
+       and c.condition_id > """+str(condition_id_inicio)+"""
+       and c.condition_id not in (select IFNULL(n.condition_id,0) from """+notificacionesdb_name+""".notificacion_ges n);"""
     print(query)
     openmrscursor.execute(query)
    
-    
-    
     #///revisar en query el estado de la tabla odp
     #///modificar query para agregar la busqueda en condition (condition.code), asegurar no repetir si son del paciente.
     #///revisar si existe el ges en condition
@@ -149,6 +207,6 @@ and c.condition_id not in (select IFNULL(n.condition_id,0) from """+notificacion
         except Exception as err:
             print(f"Unexpected {err=}, {type(err)=}")
     
-    
+
     # Pausar la ejecución durante 5 segundos
-    time.sleep(20)
+    time.sleep(os.getenv("intervalo_seg"))
