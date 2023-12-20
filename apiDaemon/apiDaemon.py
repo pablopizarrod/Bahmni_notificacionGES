@@ -209,4 +209,4 @@ select null as obs_id,
     
 
     # Pausar la ejecución durante 5 segundos
-    time.sleep(os.getenv("intervalo_seg"))
+    time.sleep(int(os.getenv("intervalo_seg")))
