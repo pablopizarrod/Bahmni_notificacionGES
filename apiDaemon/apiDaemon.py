@@ -122,7 +122,7 @@ while True:
         inner join """+openmrsdb_name+""".person pr_p on pr_u.person_id = pr_p.person_id
         inner join """+openmrsdb_name+""".person_name pr_pn on pr_u.person_id = pr_pn.person_id
         inner join """+openmrsdb_name+""".person_name pn on o.person_id = pn.person_id
-        inner join """+openmrsdb_name+""".patient_identifier pi on o.person_id = pi.patient_id
+        inner join """+openmrsdb_name+""".patient_identifier pi on o.person_id = pi.patient_id AND pi.identifier_type = 3
         inner join """+openmrsdb_name+""".person_address pa on o.person_id = pa.person_id
         left join """+openmrsdb_name+""".person_attribute pat_n on o.person_id = pat_n.person_id and pat_n.person_attribute_type_id = 14
         left join """+openmrsdb_name+""".person_attribute pat_e on o.person_id = pat_e.person_id and pat_e.person_attribute_type_id = 13
@@ -150,7 +150,7 @@ select null as obs_id,
        inner join """+openmrsdb_name+""".users pr_u on c.creator = pr_u.user_id
        inner join """+openmrsdb_name+""".person_name pr_pn on pr_u.person_id = pr_pn.person_id
        inner join """+openmrsdb_name+""".person_name pn on c.patient_id = pn.person_id
-       inner join """+openmrsdb_name+""".patient_identifier pi on c.patient_id = pi.patient_id
+       inner join """+openmrsdb_name+""".patient_identifier pi on c.patient_id = pi.patient_id AND pi.identifier_type = 3
        inner join """+openmrsdb_name+""".person_address pa on c.patient_id = pa.person_id
        inner join """+openmrsdb_name+""".person_attribute pat_n on c.patient_id = pat_n.person_id and pat_n.person_attribute_type_id = 14
        inner join """+openmrsdb_name+""".person_attribute pat_e on c.patient_id = pat_e.person_id and pat_e.person_attribute_type_id = 13
