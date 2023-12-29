@@ -37,7 +37,9 @@ obs_id_inicio = 0
 condition_id_inicio = 0
 
 # UUID del concepto que deseas buscar
-concept_uuid = '81c7149b-3f10-11e4-adec-0800271c1b75'
+#concept_uuid = '81c7149b-3f10-11e4-adec-0800271c1b75'
+concept_uuid = '00c3cf9f-0835-58fc-ab11-f9b1b0daac0a'
+
 
 # Crear un cursor para ejecutar la consulta
 openmrscursor = openmrsdb.cursor()
