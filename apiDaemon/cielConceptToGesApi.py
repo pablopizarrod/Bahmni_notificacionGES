@@ -33,6 +33,7 @@ def get_concept_details(concept_id):
         
         if icd10_who_concept_id:
             ges_concept_id, display_name_icd10_who = get_who_concept_details(icd10_who_concept_id)
+            concept_details['icd10_who_concept_id'] = icd10_who_concept_id
             concept_details['display_name_icd10_who'] = display_name_icd10_who
             concept_details['ges_concept_id'] = ges_concept_id
             concept_details['display_name_ges'] = get_ges_concept_details(ges_concept_id)
@@ -72,6 +73,7 @@ def get_who_concept_details(icd10_who_concept_id):
         return ges_concept_id, display_name
     else:
         raise Exception(f"No se encontró un concepto de la OMS con ID {icd10_who_concept_id}")
+
 
 
 def get_ges_concept_details(ges_concept_id):
@@ -118,4 +120,4 @@ def concept_details():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True, port=9091)
+    app.run()
